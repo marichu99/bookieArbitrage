@@ -34,16 +34,18 @@ def usingSelenium():
         login=driver.find_element(By.ID,"Login")
         login.click()
         print("Login successful")
-        more_bets=driver.find_element(By.CSS_SELECTOR,"body.modal-open:nth-child(2) div.ad2hs-prompt:nth-child(15) div.container-fluid:nth-child(8) div.row div.body-content.col-xs-12.col-md-12:nth-child(3) div.row:nth-child(2) div.col-lg-12 div.tab-content div.hidden.active:nth-child(1) div.row.eventRow:nth-child(3) div.col-xs-3.col-sm-2.col-md-2.col-lg-1.more-button.betbooster-more-Button div.col-xs-6.eventAction.betbooster-more-Button-eventAction:nth-child(3) div.mb-wrapper > a.btn.btn-bettingmatch-more.display--flex.flex-align--center.flex-justify--center.line-height--default") 
-                                                                            
-        more_bets.click()                          
-                                                    
+        more_bets=WebDriverWait(driver,10).until(
+                EC.presence_of_element_located((By.XPATH,"(//a[contains(@class,'')])[180]"))
+            )
+        more_bets.click()                        
         print("More bets achieved")
+        time.sleep(50)
+        driver.quit()                                                                            
     except:
         print("something went wrong")  
         time.sleep(60)
+        driver.quit()
 
- 
         
 def main():
     usingSelenium()

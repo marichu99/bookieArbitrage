@@ -18,25 +18,6 @@ county2=["'MURANG'A'","'NAIROBI CITY'","'NAKURU'","'NANDI","'NAROK'","'NYAMIRA'"
 
 
 
-def downloadCountyResults(countyList=[],*args):
-
-    global downld
-    for x in countyList:
-        path="(//a[normalize-space()="+x+"])[1]"
-        print(f"The path is {path}")
-        try:
-            downld=WebDriverWait(driver,10).until(
-                EC.presence_of_element_located((By.XPATH,path))        
-            )
-        except:
-            print("A problem arose")
-            time.sleep(10)
-            driver.quit()
-
-        downld.click()
-        print(f"{x} County forms are downloading .....") 
-    else:
-        downloadCountyResults(countryList=county2)
 
 
 def main():
@@ -44,17 +25,22 @@ def main():
 
     try:
         main = WebDriverWait(driver,10).until(
-            EC.presence_of_element_located((By.XPATH,"(//a[@class='download-results'])[1]"))
+            EC.presence_of_element_located((By.XPATH,"(//div[@class='q-field__control relative-position row no-wrap'])[3]"))
         )
-          
+        selectForm34=WebDriverWait(driver,10).until(
+            EC.presence_of_element_located((By.XPATH,"(//div[@id='f_ef9ea4d9-7b46-416b-bf0a-8e5c360c1938_1'])[1]"))
+        )
+        m=open("test.html","w")
+        m.write(driver.page_source)
+        m.close()
+        main.click()
+        selectForm34.click()
+        
     except:
         print("element not found")
         time.sleep(10)
         driver.quit()
-    main.click()
-    downloadCountyResults(countyList=county1)
-    # search=driver.find_element(By.LINK_TEXT,"//a[contains(@href,'#/downloads?contest=34')]")
 
-    # search.click()
+    
     
 main()
